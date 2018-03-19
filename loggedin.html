@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+
+    <h3>In the background...</h3>
+    <p>
+    When the user got redirected back to us, we got notified that they logged in.<br>
+    We then made a POST to
+    <pre><a href="https:secure.meetup.com/oauth2/access">https:secure.meetup.com/oauth2/access</a></pre>
+    with the body
+    <pre>
+    [[postBody]]
+    </pre>
+    </body>
+    </p>
+
+    We then got back the following block of JSON:
+    <pre>[[rawJson]]</pre>
+
+    <h3>OAUTH details</h3>
+    <p>We can use the details below to make calls to the OAUTH providers own API</p>
+    <table class="table">
+            <thead>
+                <th>Part</th>
+                <th>Value</th>
+                <th>Usage</th>
+            </thead>
+            <tbody>
+                <tr><td>access_token</td><td>[[access_token]]</td><td>The secret we can use it to call the providers API</td></tr>
+                <tr><td>refresh_token</td><td>[[refresh_token]]</td><td>Can be used to get a new access_token to avoid it timing out</td></tr>
+                <tr><td>token_type</td><td>[[token_type]]</td><td>Indicates the token alone is enough; <a href="https://tools.ietf.org/html/rfc6750">alternatives require crypto</a></td></tr>
+                <tr><td>expires_in</td><td>[[expires_in]] (seconds)</td><td>How long the access_token is valid for</td></tr>
+            </tbody>
+        </table>
+
+    <br>
+    <h3>Call our server...</h3>
+    <pre>
+    <a href="/profile?access_token=[[access_token]]&refresh_token=[[refresh_token]]">/profile?access_token=[[access_token]]&refresh_token=[[refresh_token]]</a>
+    </pre>
+
+    <h3>...Which calls the Meetup-specific API</h3>
+    Because this is a <strong>bearer</strong> token it's not tied to the server, we can use it from anywhere, so can make the call directly if we choose.
+    <pre>
+    <a href="https://api.meetup.com/members/self?access_token=[[access_token]]">https://api.meetup.com/members/self?access_token=[[access_token]]</a>
+    </pre>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body> 
+</html>
