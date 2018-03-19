@@ -7,42 +7,71 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
-
+<div class="container"> 
     <h3>In the background...</h3>
     <p>
-    When the user got redirected back to us, we got notified that they logged in.<br>
+    When the user got redirected back to us wth the HTTP 302, we got notified that they logged in when we received a request for<br>
+    <pre><a href="[[url]]">[[url]]</a></pre>
+    <table class="table">
+        <thead>
+                <th>Part</th>
+                <th>Value</th>
+                <th>Usage</th>
+        </thead>
+        <tbody>
+            <tr><td>userId</td><td>[[userId]]</td><td>The Id we generated, to help us tie requests together</td></tr>
+            <tr><td>code</td><td>[[code]]</td><td>A per-user one-time code from the provider we'll need to get the actual token</td></tr>
+        </tbody>
+    </table>
+    
+    <h3>Getting the token</h3>
     We then made a POST to
-    <pre><a href="https:secure.meetup.com/oauth2/access">https:secure.meetup.com/oauth2/access</a></pre>
-    with the body
+    <pre><a href="https://secure.meetup.com/oauth2/access">https://secure.meetup.com/oauth2/access</a></pre>
+    with the following in the body
+    <table class="table">
+        <thead>
+            <th>Part</th>
+            <th>Value</th>
+            <th>Usage</th>
+        </thead>
+        <tbody>
+            <tr><td>client_id</td><td>[[client_id]]</td><td>The key given to us by the provider when we registered</td></tr>
+            <tr><td>client_secret</td><td>[[client_secret]]</td><td>The secret given to us by the provider when we registered</td></tr>
+            <tr><td>grant_type</td><td>[[grant_type]]</td><td>Type of token</td></tr>
+            <tr><td>redirect_uri</td><td>[[redirect_uri]]</td><td>Same redirect as before; it won't be called this time</td></tr>
+            <tr><td>code</td><td>[[code]]</td><td>Per-user code we got from the callback</td></tr>
+        </tbody>
+    </table>
+
+    which looks like:
     <pre>
     [[postBody]]
     </pre>
     </body>
     </p>
 
-    We then got back the following block of JSON:
+    <h3>OAUTH token details</h3>
+    We got back the following block of JSON:
     <pre>[[rawJson]]</pre>
-
-    <h3>OAUTH details</h3>
-    <p>We can use the details below to make calls to the OAUTH providers own API</p>
+    <p>We can use these details to make calls to the OAUTH provider's own API</p>
     <table class="table">
-            <thead>
-                <th>Part</th>
-                <th>Value</th>
-                <th>Usage</th>
-            </thead>
-            <tbody>
-                <tr><td>access_token</td><td>[[access_token]]</td><td>The secret we can use it to call the providers API</td></tr>
-                <tr><td>refresh_token</td><td>[[refresh_token]]</td><td>Can be used to get a new access_token to avoid it timing out</td></tr>
-                <tr><td>token_type</td><td>[[token_type]]</td><td>Indicates the token alone is enough; <a href="https://tools.ietf.org/html/rfc6750">alternatives require crypto</a></td></tr>
-                <tr><td>expires_in</td><td>[[expires_in]] (seconds)</td><td>How long the access_token is valid for</td></tr>
-            </tbody>
-        </table>
+        <thead>
+            <th>Part</th>
+            <th>Value</th>
+            <th>Usage</th>
+        </thead>
+        <tbody>
+            <tr><td>access_token</td><td>[[access_token]]</td><td>The secret we can use it to call the provider's API</td></tr>
+            <tr><td>refresh_token</td><td>[[refresh_token]]</td><td>Can be used to get a new access_token to avoid it timing out</td></tr>
+            <tr><td>token_type</td><td>[[token_type]]</td><td>Indicates the token alone is enough; <a href="https://tools.ietf.org/html/rfc6750">alternatives require crypto</a></td></tr>
+            <tr><td>expires_in</td><td>[[expires_in]] (seconds)</td><td>How long the access_token is valid for</td></tr>
+        </tbody>
+    </table>
 
     <br>
     <h3>Call our server...</h3>
     <pre>
-    <a href="/profile?access_token=[[access_token]]&refresh_token=[[refresh_token]]">/profile?access_token=[[access_token]]&refresh_token=[[refresh_token]]</a>
+    <a href="/profile?access_token=[[access_token]]">/profile?access_token=[[access_token]]</a>
     </pre>
 
     <h3>...Which calls the Meetup-specific API</h3>
@@ -53,5 +82,6 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</div>
 </body> 
 </html>

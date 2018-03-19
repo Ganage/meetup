@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
-
-    <h1>OAUTH2</h1>
+<div class="container"> 
+    <h1>OAUTH2 Client</h1>
     <p>
     Server-flow: for web sites<br>
     Implicit-flow: for local applications<br>
@@ -18,13 +18,13 @@
     <p>
     First we register at <a href="https://secure.meetup.com/meetup_api/oauth_consumers/create">https://secure.meetup.com/meetup_api/oauth_consumers/create</a><br>
     We have to enter:<br>
-    A redirect URL that the OAUTH2 provider will redirect clients to: [[redirectUrl]]<br>
+    A redirect URL that the OAUTH2 provider will redirect clients to (we can use localhost for testing: <a href="[[redirectUrl]]">[[redirectUrl]]</a><br>
     A name and other details to identify our website or application
     </p>
     <br>
     <h3>Provider secrets</h3>
     <p>
-    We get given:<br>
+    We get given two permanent bits of information:<br>
     A key: <pre>[[key]]</pre><br>
     A secret: <pre>[[secret]]</pre><br>
     </p>
@@ -38,7 +38,7 @@
             <th>Meaning</th>
         </thead>
         <tbody>
-            <tr><td>https://secure.meetup.com/oauth2/authorize?</td><td>Root URL of the OAUTH2 provider</td></tr>
+            <tr><td><a href="https://secure.meetup.com/oauth2/authorize">https://secure.meetup.com/oauth2/authorize</a></td><td>Root URL of the OAUTH2 provider</td></tr>
             <tr><td>client_id=[[key]]</td><td>The identifier of our website, given to us by the OAUTH2 provider</td></tr>
             <tr><td>response_type=code</td><td>"code" means server flow, "token" means implicit flow</td></tr>
             <tr><td>redirect_uri=http://localhost:8080/loggedin?userId=[[id]]</td><td>After authentication, OAUTH provider will redirect the user back to this URL using a HTTP 302 redirect.
@@ -55,5 +55,6 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</div>
 </body> 
 </html>
